@@ -1,4 +1,4 @@
-import { Producto } from "../types/producto";
+import { Factura } from "../types/factura";
 import{db} from "../db";
 import { RowDataPacket, ResultSetHeader } from "mysql2";
 
@@ -11,17 +11,17 @@ export const findAll = (callback:Function) =>{
             if (err) {callback(err)};
 
             const rows = <RowDataPacket[]>result;
-            const productos: Producto[]= [];
+            const facturas: Factura[]= [];
 
             rows.forEach (row =>{
-                const producto: Producto = {
-                    id_producto: row.id_producto,
-                    nombre: row.nombre,
-                    valor: row.valor
+                const factura: Factura = {
+                    id_factura: row.id_factura,
+                    cliente: row.cliente,
+                    fecha: row.fecha
                 };
-                productos.push(producto)
+                facturas.push(factura)
             });
-            callback(null, productos);
+            callback(null, facturas);
         }
         );
 };
