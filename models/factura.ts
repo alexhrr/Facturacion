@@ -3,7 +3,7 @@ import{db} from "../db";
 import { RowDataPacket, ResultSetHeader } from "mysql2";
 
 export const findAll = (callback:Function) =>{
-    const queryString ="select * from producto";
+    const queryString ="select * from factura";
 
     db.query(
         queryString,

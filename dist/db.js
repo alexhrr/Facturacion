@@ -26,26 +26,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.db = void 0;
+const mysql2_1 = __importDefault(require("mysql2"));
 const dotenv = __importStar(require("dotenv"));
-const express_1 = __importDefault(require("express"));
-const bodyParser = __importStar(require("body-parser"));
-const db_1 = require("./db");
-const facturaRouter_1 = require("./routes/facturaRouter");
-const productoRouter_1 = require("./routes/productoRouter");
-const app = (0, express_1.default)();
 dotenv.config();
-app.use(bodyParser.json());
-app.use("/factura", facturaRouter_1.facturaRouter);
-app.use("/producto", productoRouter_1.productoRouter);
-db_1.db.connect((err) => {
-    if (err) {
-        console.log("Database connection error");
-    }
-    else {
-        console.log("Database Conected");
-    }
-});
-app.listen(process.env.PORT, () => {
-    console.log("Node server started running");
-    console.log(`Go to http://${process.env.HOST}:${process.env.PORT}`);
+exports.db = mysql2_1.default.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PWD,
+    database: process.env.DB_NAME
 });

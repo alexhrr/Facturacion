@@ -22,30 +22,29 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const dotenv = __importStar(require("dotenv"));
+exports.productoRouter = void 0;
 const express_1 = __importDefault(require("express"));
-const bodyParser = __importStar(require("body-parser"));
-const db_1 = require("./db");
-const facturaRouter_1 = require("./routes/facturaRouter");
-const productoRouter_1 = require("./routes/productoRouter");
-const app = (0, express_1.default)();
-dotenv.config();
-app.use(bodyParser.json());
-app.use("/factura", facturaRouter_1.facturaRouter);
-app.use("/producto", productoRouter_1.productoRouter);
-db_1.db.connect((err) => {
-    if (err) {
-        console.log("Database connection error");
-    }
-    else {
-        console.log("Database Conected");
-    }
-});
-app.listen(process.env.PORT, () => {
-    console.log("Node server started running");
-    console.log(`Go to http://${process.env.HOST}:${process.env.PORT}`);
-});
+const productoModels = __importStar(require("../models/producto"));
+const productoRouter = express_1.default.Router();
+exports.productoRouter = productoRouter;
+productoRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    productoModels.findAll((err, facturas) => {
+        if (err) {
+            return res.status(500).json({ "errorMessage": err.message });
+        }
+        res.status(200).json({ "data": facturas });
+    });
+}));
