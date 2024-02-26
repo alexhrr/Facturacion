@@ -35,25 +35,48 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.facturaRouter = void 0;
+exports.pedidoRouter = void 0;
 const express_1 = __importDefault(require("express"));
+const pedidoModels = __importStar(require("../models/pedido"));
 const facturaModels = __importStar(require("../models/factura"));
-const facturaRouter = express_1.default.Router();
-exports.facturaRouter = facturaRouter;
-facturaRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    facturaModels.findAll((err, facturas) => {
+const pedidoRouter = express_1.default.Router();
+exports.pedidoRouter = pedidoRouter;
+pedidoRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    pedidoModels.findAll((err, pedidos) => {
         if (err) {
             return res.status(500).json({ "errorMessage": err.message });
         }
-        res.status(200).json({ "data": facturas });
+        res.status(200).json({ "data": pedidos });
     });
 }));
-facturaRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const factura = req.body;
-    facturaModels.create(factura, (err, id_factura) => {
-        if (err) {
-            return res.status(500).json({ "errorMessage": err.message });
-        }
-        res.status(200).json({ "id insertado": id_factura });
+pedidoRouter.post("/", (req, res) => {
+    var ID;
+    var productos = req.body.productos;
+    console.log(req.body.cliente);
+    console.log(req.body.fecha);
+    console.log(req.body.productos);
+    console.log(req.body.cantidad);
+    const factura = {
+        id_factura: 0,
+        cliente: req.body.cliente,
+        fecha: req.body.fecha
+    };
+    facturaModels.create(factura, (err, id) => {
+        console.log('Este es el ID que retorna el modelo:', id);
+        productos.forEach((producto) => {
+            const pedido = {
+                id_pedido: 0,
+                id_factura: id,
+                id_producto: producto,
+                cantidad: req.body.cantidad
+            };
+            pedidoModels.create(pedido, (err, id_pedido) => {
+                if (err) {
+                    return res.status(500).json({ "errorMessage": err.message });
+                }
+                res.status(200).json({ "id_insertado": id_pedido });
+            });
+            console.log("Estos son los valores para crear pedido", pedido);
+        });
     });
-}));
+});

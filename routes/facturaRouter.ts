@@ -14,4 +14,15 @@ facturaRouter.get("/", async (req: Request, res: Response)=>{
     })
 });
 
+facturaRouter.post("/", async (req: Request, res: Response)=>{
+    const factura : Factura = req.body;
+    facturaModels.create(factura ,(err:Error, id_factura:number)=>{
+        if(err){
+            return res.status(500).json({"errorMessage" : err.message});
+        }
+        
+        res.status(200).json({"id insertado":id_factura});
+    })
+});
+
 export {facturaRouter};

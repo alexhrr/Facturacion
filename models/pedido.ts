@@ -28,10 +28,10 @@ export const findAll = (callback:Function) =>{
 };
 
 export const create = (pedido: Pedido, callback: Function) => {
-    const queryString = "insert into pedido (id_pedido, id_factura, id_producto, cantidad) values (?,?,?,?);"
+    const queryString = "insert into pedido (id_factura, id_producto, cantidad) values (?,?,?);"
     db.query(
         queryString,
-        [pedido.id_pedido, pedido.id_factura, pedido.id_producto, pedido.cantidad],
+        [pedido.id_factura, pedido.id_producto, pedido.cantidad],
         (err, result)=>{
             if (err){callback(err)}
             const insertId = (<ResultSetHeader>result).insertId;

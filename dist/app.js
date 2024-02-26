@@ -32,11 +32,13 @@ const bodyParser = __importStar(require("body-parser"));
 const db_1 = require("./db");
 const facturaRouter_1 = require("./routes/facturaRouter");
 const productoRouter_1 = require("./routes/productoRouter");
+const pedidoRouter_1 = require("./routes/pedidoRouter");
 const app = (0, express_1.default)();
 dotenv.config();
 app.use(bodyParser.json());
 app.use("/factura", facturaRouter_1.facturaRouter);
 app.use("/producto", productoRouter_1.productoRouter);
+app.use("/pedido", pedidoRouter_1.pedidoRouter);
 db_1.db.connect((err) => {
     if (err) {
         console.log("Database connection error");

@@ -4,6 +4,7 @@ import * as bodyParser from "body-parser";
 import {db} from "./db";
 import { facturaRouter } from "./routes/facturaRouter";
 import { productoRouter } from "./routes/productoRouter";
+import { pedidoRouter } from "./routes/pedidoRouter";
 
 const app = express();
 dotenv.config();
@@ -11,6 +12,7 @@ dotenv.config();
 app.use(bodyParser.json());
 app.use("/factura", facturaRouter);
 app.use("/producto", productoRouter);
+app.use("/pedido", pedidoRouter);
 
 db.connect((err)=>{
     if (err){

@@ -3,29 +3,30 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.create = exports.findAll = void 0;
 const db_1 = require("../db");
 const findAll = (callback) => {
-    const queryString = "select * from factura";
+    const queryString = "select * from pedido";
     db_1.db.query(queryString, (err, result) => {
         if (err) {
             callback(err);
         }
         ;
         const rows = result;
-        const facturas = [];
+        const pedidos = [];
         rows.forEach(row => {
-            const factura = {
+            const pedido = {
+                id_pedido: row.id_pedido,
                 id_factura: row.id_factura,
-                cliente: row.cliente,
-                fecha: row.fecha
+                id_producto: row.id_producto,
+                cantidad: row.cantidad,
             };
-            facturas.push(factura);
+            pedidos.push(pedido);
         });
-        callback(null, facturas);
+        callback(null, pedidos);
     });
 };
 exports.findAll = findAll;
-const create = (factura, callback) => {
-    const queryString = "insert into factura (cliente, fecha) values (?,?);";
-    db_1.db.query(queryString, [factura.cliente, factura.fecha], (err, result) => {
+const create = (pedido, callback) => {
+    const queryString = "insert into pedido (id_factura, id_producto, cantidad) values (?,?,?);";
+    db_1.db.query(queryString, [pedido.id_factura, pedido.id_producto, pedido.cantidad], (err, result) => {
         if (err) {
             callback(err);
         }
