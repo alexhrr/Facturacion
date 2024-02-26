@@ -1,6 +1,6 @@
 # Facturacion
 ## Desarrollado por: Alex Humberto Rodriguez Rueda
-API REST que permite la creacion de facturas. Haciendo uso de un listado de productos se crea una factura y mediante un pedido se agregan los correspondientes productos, asi mismo se calcula el valor neto de cada producto teniendo en cuenta la cantidad y finalmente se calcula el valor total de la factura.
+API REST que permite la creacion de facturas, haciendo uso de un listado de productos se crea una factura y mediante un pedido se agregan los correspondientes productos, asi mismo se calcula el valor neto de cada producto teniendo en cuenta la cantidad y finalmente se calcula el valor total de la factura.
 
 ## Lenguajes y Tecnologías utilizadas
 - JavaScript
@@ -74,14 +74,14 @@ Para la persistencia del aplicativo, se realizó hizo uso de una base de datos r
 
 
 
-- Consultar las facturas creadas.
+- Consultar todas las facturas creadas.
 ```bash
  GET 127.0.0.1:4100/factura
 ```
 ![Consulta-facturas](https://github.com/alexhrr/Facturacion/assets/42241322/d01a13a7-f35b-4c94-a242-a19618bb1b9d)
 
 
-- consultar el pedido con el id de la factura creada.
+- Consultar el pedido con el id de la factura creada. Al final se muestra el calculo del valor total de la factura.
 ```bash
  GET 127.0.0.1:4100/pedido/:id_factura
 ```
