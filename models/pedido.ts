@@ -39,3 +39,29 @@ export const create = (pedido: Pedido, callback: Function) => {
         }
     );
 };
+
+export const factura =(id_factura :Number, callback:Function)=>{
+    const queryString ="SELECT factura.cliente, factura.fecha, producto.nombre,producto.valor,pedido.cantidad FROM pedido INNER JOIN producto ON pedido.id_producto = producto.id_producto INNER JOIN factura ON pedido.id_factura = factura.id_factura WHERE pedido.id_factura = (?);";
+
+    db.query(
+        queryString,
+        id_factura,
+        (err, result)=>{
+            if (err) {callback(err)};
+
+            const rows = <RowDataPacket[]>result;
+            const pedidos: Pedido[]= [];
+
+            rows.forEach (row =>{
+                const pedido: Pedido = {
+                    id_pedido: row.id_pedido,
+                    id_factura: row.id_factura,
+                    id_producto: row.id_producto,
+                    cantidad: row.cantidad,
+                };
+                pedidos.push(pedido)
+            });
+            callback(null, pedidos);
+        }
+        );
+}
