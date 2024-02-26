@@ -58,23 +58,6 @@ pedidoRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function*
         fecha: req.body.fecha,
     };
     facturaModels.create(factura, (err, id) => {
-        /*  productos.forEach((producto: number, indice) =>{
-                const pedido: Pedido = {
-                    id_pedido : 0,
-                    id_factura : id,
-                    id_producto : producto,
-                    cantidad : req.body.cantidad[indice]};
-                    
-                    pedidoModels.create(pedido ,(err:Error, id_pedido: number)=>{
-                        if(err){
-                            return res.status(500).json({"errorMessage" : err.message});
-                        }
-                        res.status(200).json({"id_insertado":id_pedido});
-                    })
-                }
-                
-            )*/
-        // Crear un array para almacenar todas las promesas
         const promesas = [];
         productos.forEach((producto, indice) => {
             const pedido = {
@@ -83,29 +66,33 @@ pedidoRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function*
                 id_producto: producto,
                 cantidad: req.body.cantidad[indice],
             };
-            // Crear una promesa para cada llamada a pedidoModels.create
             const promesa = new Promise((resolve, reject) => {
                 pedidoModels.create(pedido, (err, id_pedido) => {
                     if (err) {
-                        reject(err); // Rechazar la promesa si hay un error
+                        reject(err);
                     }
                     else {
-                        resolve(id_pedido); // Resolver la promesa con el id_pedido
+                        resolve(id_pedido);
                     }
                 });
             });
-            // Agregar la promesa al array de promesas
             promesas.push(promesa);
         });
-        // Esperar a que todas las promesas se resuelvan usando Promise.all
         Promise.all(promesas)
             .then((ids_pedidos) => {
-            // Se ejecuta cuando todas las promesas se resuelven correctamente
             res.status(200).json({ ids_insertados: ids_pedidos });
         })
             .catch((error) => {
-            // Se ejecuta si alguna de las promesas es rechazada
             res.status(500).json({ errorMessage: error.message });
         });
+    });
+}));
+pedidoRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id_factura = Number(req.params.id);
+    pedidoModels.factura(id_factura, (err, factura) => {
+        if (err) {
+            return res.status(500).json({ errorMessage: err.message });
+        }
+        res.status(200).json({ data: factura });
     });
 }));

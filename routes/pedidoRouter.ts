@@ -3,6 +3,7 @@ import * as pedidoModels from "../models/pedido";
 import * as facturaModels from "../models/factura";
 import { Pedido } from "../types/pedido";
 import { Factura } from "../types/factura";
+import { total_factura } from "../types/total_factura";
 
 const pedidoRouter = express.Router();
 
@@ -61,5 +62,17 @@ pedidoRouter.post("/", async (req: Request, res: Response) => {
       });
   });
 });
+
+pedidoRouter.get("/:id", async (req: Request, res: Response) => {
+    const id_factura = Number(req.params.id);
+    pedidoModels.factura(id_factura, (err: Error, factura: total_factura[]) => {
+        
+      if (err) {
+        return res.status(500).json({ errorMessage: err.message });
+      }
+  
+      res.status(200).json({ data: factura });
+    });
+  });
 
 export { pedidoRouter };
