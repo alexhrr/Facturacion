@@ -25,3 +25,16 @@ export const findAll = (callback:Function) =>{
         }
         );
 };
+
+export const create = (factura: Factura, callback: Function) => {
+    const queryString = "insert into factura (id_factura, cliente, fecha) values (?,?,?);"
+    db.query(
+        queryString,
+        [factura.id_factura, factura.cliente, factura.fecha],
+        (err, result)=>{
+            if (err){callback(err)}
+            const insertId = (<ResultSetHeader>result).insertId;
+            callback(null,insertId)
+        }
+    );
+};
