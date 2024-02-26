@@ -49,7 +49,7 @@ También se incluye al script para la creación de la base de datos junto con su
 ### Modelo de Datos
 Para la persistencia del aplicativo, se realizó hizo uso de una base de datos relacional, en la cual se implementó el siguiente modelo de datos
 <div align="center">
-  <img src="![Entidad relacion](https://github.com/alexhrr/Facturacion/assets/42241322/2cd84f3d-8e74-4b0b-aff3-008da7821ca2)" alt="Modelo de Datos">
+  <img src="https://github.com/alexhrr/Facturacion/assets/42241322/2cd84f3d-8e74-4b0b-aff3-008da7821ca2" alt="Modelo de Datos">
 </div>
 
 ### Servicios empleados
