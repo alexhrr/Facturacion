@@ -86,7 +86,7 @@ export const factura = (id_factura: Number, callback: Function) => {
         total_factura.push(factura); 
     });
     
-    
+        
     const resul : resultado ={
         tf : total_factura,
         total : total_factura.reduce((total, factura) => total + factura.total, 0)
