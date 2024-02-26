@@ -59,31 +59,9 @@ export const factura = (id_factura: Number, callback: Function) => {
     const rows = <RowDataPacket[]>result;
     const total_factura: total_factura[] = [];
 
-    /*rows.forEach((row) => {
-      const factura: total_factura = {
-        factura: {
-          id_factura: 0,
-          cliente: row.cliente,
-          fecha: row.fecha,
-        },
-        producto: {
-          id_producto: 0,
-          nombre: row.nombre,
-          valor: row.valor,
-        },
-        pedido: {
-          cantidad: row.cantidad,
-          id_pedido: 0,
-          id_factura: 0,
-          id_producto: 0,
-        },
-        neto: row.valor * row.cantidad,
-        total: 0,
-      };
-    });*/
 
     rows.forEach((row) => {
-        const neto = row.valor * row.cantidad; // Calculamos el neto para esta factura
+        const neto = row.valor * row.cantidad; 
         const factura: total_factura = {
             factura: {
                 id_factura: 0,
@@ -101,16 +79,14 @@ export const factura = (id_factura: Number, callback: Function) => {
                 id_factura: 0,
                 id_producto: 0,
             },
-            neto: [neto], // Almacenamos el neto como un arreglo de un solo elemento
-            total: neto, // El total inicialmente es igual al neto para esta factura
+            neto: [neto], 
+            total: neto, 
         };
     
-        total_factura.push(factura); // Agregamos la factura al arreglo de facturas
+        total_factura.push(factura); 
     });
     
-    // Una vez que se han creado todas las facturas, podrías calcular el total sumando todos los netos
-    //const totalFacturas = total_factura.reduce((total, factura) => total + factura.total, 0);
-
+    
     const resul : resultado ={
         tf : total_factura,
         total : total_factura.reduce((total, factura) => total + factura.total, 0)
